@@ -1,21 +1,22 @@
 export class Recipe {
 
   constructor(
-    private name: string,
-    private description: string,
-    private imagePath: string
+    private _name: string,
+    private _description: string,
+    private _imagePath: string
   ) { }
 
 
-  public getName(): string {
-    return this.name;
+  public get imagePath(): string {
+    return this._imagePath;
   }
 
-  public getDescription(): string {
-    return this.description;
+  public get description(): string {
+    return this._description;
   }
 
-  public getImagePath(): string {
-    return this.imagePath;
+  public get name(): string {
+    return this._name;
   }
+
 }
