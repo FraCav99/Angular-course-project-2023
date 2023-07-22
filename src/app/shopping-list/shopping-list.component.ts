@@ -13,4 +13,8 @@ export class ShoppingListComponent {
     new Ingredient('salad', 2),
     new Ingredient('bun', 2)
   ];
+
+  updateIngredients(newIngredient: Ingredient): void {
+    this.ingredients = [...this.ingredients, newIngredient];
+  }
 }
