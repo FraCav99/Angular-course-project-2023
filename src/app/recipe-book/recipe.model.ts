@@ -1,9 +1,12 @@
+import { Ingredient } from "../shared/ingredient.model";
+
 export class Recipe {
 
   constructor(
     private _name: string,
     private _description: string,
-    private _imagePath: string
+    private _imagePath: string,
+    private _ingredients: Ingredient[]
   ) { }
 
 
@@ -17,6 +20,10 @@ export class Recipe {
 
   public get name(): string {
     return this._name;
+  }
+
+  public get ingredients(): Ingredient[] {
+    return this._ingredients;
   }
 
 }
