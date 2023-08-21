@@ -6,35 +6,39 @@ import { BehaviorSubject } from "rxjs";
   providedIn: 'root'
 })
 export class ShoppingListService {
-  private ingredients: Ingredient[] = [
-    new Ingredient('hamburger', 2),
-    new Ingredient('salad', 2),
-    new Ingredient('bun', 2)
-  ];
 
-  private readonly ingredientsSubject = new BehaviorSubject<Ingredient[]>(this.ingredients.slice());
-  readonly ingredients$ = this.ingredientsSubject.asObservable();
-
-  /*private ingredients: Map<string, Ingredient> = new Map([
+  private ingredients: Map<string, Ingredient> = new Map([
     ['hamburger', new Ingredient('hamburger', 2)],
     ['salad', new Ingredient('salad', 2)],
     ['bun', new Ingredient('bun', 2)]
-  ])*/
+  ]);
+
+  private readonly ingredientsSubject = new BehaviorSubject<Ingredient[]>(this.getIngredients());
+  readonly ingredients$ = this.ingredientsSubject.asObservable();
 
   getIngredients(): Ingredient[] {
-    return this.ingredients.slice();
+    return Array.from(this.ingredients.values()).slice();
+  }
+
+  private setIngredients(newIngredient: Ingredient): void {
+    if (this.ingredients.has(newIngredient.name)) {
+      const existingIngredient = this.ingredients.get(newIngredient.name) as Ingredient;
+      existingIngredient.updateAmount(newIngredient.amount);
+    } else {
+      this.ingredients.set(newIngredient.name, new Ingredient(newIngredient.name, newIngredient.amount));
+    }
   }
 
   addNewIngredient(newIngredient: Ingredient): void {
-    this.ingredients.push(newIngredient);
-    this.ingredientsSubject.next(this.ingredients.slice());
+    this.setIngredients(newIngredient);
+    this.ingredientsSubject.next(this.getIngredients());
   }
 
   addIngredientsFromDetails(ingredients: Ingredient[]): void {
     for (const ingredient of ingredients) {
-      this.ingredients.push(ingredient);
+      this.setIngredients(ingredient);
     }
 
-    this.ingredientsSubject.next(this.ingredients.slice());
+    this.ingredientsSubject.next(this.getIngredients());
   }
 }

@@ -13,4 +13,9 @@ export class Ingredient {
     return this._name;
   }
 
+  updateAmount(value: number): void {
+    if (this._amount !== undefined) {
+      this._amount += value;
+    }
+  }
 }
