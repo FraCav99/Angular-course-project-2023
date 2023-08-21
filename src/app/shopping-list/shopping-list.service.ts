@@ -29,4 +29,12 @@ export class ShoppingListService {
     this.ingredients.push(newIngredient);
     this.ingredientsSubject.next(this.ingredients.slice());
   }
+
+  addIngredientsFromDetails(ingredients: Ingredient[]): void {
+    for (const ingredient of ingredients) {
+      this.ingredients.push(ingredient);
+    }
+
+    this.ingredientsSubject.next(this.ingredients.slice());
+  }
 }
